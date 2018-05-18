@@ -109,8 +109,6 @@ module.exports = {
             context: __dirname,
             manifest: manifest
         }),
-        new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({
             filename: 'style.[chunkhash].css',
             chunkFilename: '[id].css'
