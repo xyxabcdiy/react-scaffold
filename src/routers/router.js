@@ -1,9 +1,26 @@
 import React from 'react';
+import {Routes} from './routes';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import {hot} from 'react-hot-loader';
 
-const Root = () => (
-    <Router>
+export const RouteWithSubRoutes = (route) => {
+    return (
+        <Route
+            exact={!!route.exact}
+            path={route.path}
+            render={(props) => {
+                return (
+                    <route.component {...props} routes={route.routes}/>
+                );
+            }}
+        />
+    );
+};
+
+// key=Math.random() 解决 react-hot-loader 异步组件更新的问题
+let App = () => (
+    <Router
+        key={module.hot ? Math.random() : undefined}>
         <div>
             <ul>
                 <li>
@@ -13,65 +30,20 @@ const Root = () => (
                     <Link to="/about">About</Link>
                 </li>
                 <li>
-                    <Link to="/topics">Topics</Link>
+                    <Link to="/topics">Props v. State</Link>
                 </li>
             </ul>
-
             <hr/>
-
-            <Route exact path="/" component={Home}/>
-            <Route path="/about" component={About}/>
-            <Route path="/topics" component={Topics}/>
+            {
+                Routes.map((route, i) => (<RouteWithSubRoutes key={i} {...route}/>))
+            }
         </div>
     </Router>
 );
 
-const Home = () => (
-    <div>
-        <h2>Home</h2>
-    </div>
-);
-
-const About = () => (
-    <div>
-        <h2>About</h2>
-    </div>
-);
-
-const Topics = ({match}) => (
-    <div>
-        <h2>Topics</h2>
-        <ul>
-            <li>
-                <Link to={`${match.url}/rendering`}>Rendering with React</Link>
-            </li>
-            <li>
-                <Link to={`${match.url}/components`}>Components</Link>
-            </li>
-            <li>
-                <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
-            </li>
-        </ul>
-
-        <Route path={`${match.url}/:topicId`} component={Topic}/>
-        <Route
-            exact
-            path={match.url}
-            render={() => <h3>Please select a topic.</h3>}
-        />
-    </div>
-);
-
-const Topic = ({match}) => (
-    <div>
-        <h3>{match.params.topicId}</h3>
-    </div>
-);
-
-let App = Root;
-
+// react-hot-loader react热更新
 if (module.hot) {
-    App = hot(module)(Root);
+    App = hot(module)(App);
 }
 
 export default App;
