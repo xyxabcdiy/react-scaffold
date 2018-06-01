@@ -4,7 +4,7 @@ const webpack = require('webpack');
 
 const ROOT_PATH = path.resolve(__dirname);
 const SRC_PATH = path.resolve(__dirname, 'src');
-const BUILD_PATH = path.resolve(ROOT_PATH, 'output');
+const BUILD_PATH = path.resolve(ROOT_PATH, 'dist');
 
 const COMPONENTS_PATH = path.resolve(SRC_PATH, 'components');
 const STYLES_PATH = path.resolve(SRC_PATH, 'styles');
@@ -42,17 +42,7 @@ module.exports = {
             {
                 test: /\.js?$/,
                 exclude: /(node_modules)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['react', 'env', 'stage-1'],
-                        plugins: [
-                            'react-html-attrs',
-                            'transform-class-properties',
-                            'transform-decorators-legacy',
-                        ]
-                    }
-                }
+                use: 'babel-loader'
             },
             {
                 test: /\.css$/,
@@ -103,8 +93,11 @@ module.exports = {
         new webpack.DefinePlugin({
             __DEV__: process.env.NODE_ENV,
         }),
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
+        hot: true,
         contentBase: './output',
         disableHostCheck: true,
         historyApiFallback: true,

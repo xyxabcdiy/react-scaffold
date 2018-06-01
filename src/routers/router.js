@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {hot} from 'react-hot-loader';
 
 const Root = () => (
     <Router>
@@ -67,4 +68,10 @@ const Topic = ({match}) => (
     </div>
 );
 
-export default Root;
+let App = Root;
+
+if (module.hot) {
+    App = hot(module)(Root);
+}
+
+export default App;

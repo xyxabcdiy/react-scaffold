@@ -36,18 +36,7 @@ module.exports = {
             {
                 test: /\.js?$/,
                 exclude: /(node_modules)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['react', 'env', 'stage-1'],
-                        plugins: [
-                            'react-html-attrs',
-                            'transform-class-properties',
-                            'transform-decorators-legacy',
-                            'react-hot-loader/babel'
-                        ]
-                    }
-                }
+                use: 'babel-loader'
             },
             {
                 test: /\.css$/,
