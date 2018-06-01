@@ -1,0 +1,13 @@
+{
+    "presets": [
+        "react",
+        "env",
+        "stage-1"
+    ],
+    "plugins": [
+        "react-html-attrs",
+        "transform-class-properties",
+        "transform-decorators-legacy",
+        "react-hot-loader/babel"
+    ]
+}
