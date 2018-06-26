@@ -13,6 +13,8 @@ const MODULES_PATH = path.resolve(SRC_PATH, 'modules');
 const LIBS_PATH = path.resolve(SRC_PATH, 'libs');
 const UTILS_PATH = path.resolve(SRC_PATH, 'utils');
 
+const postcssConfig = require('./postcss.config');
+
 module.exports = {
     mode: 'development',
     entry: path.resolve(SRC_PATH, 'index.js'),
@@ -49,7 +51,10 @@ module.exports = {
                 use: [
                     'style-loader',
                     'css-loader',
-                    'postcss-loader'
+                    {
+                        loader: 'postcss-loader',
+                        options: postcssConfig()
+                    }
                 ]
             },
             {
@@ -57,7 +62,10 @@ module.exports = {
                 use: [
                     'style-loader',
                     'css-loader',
-                    'postcss-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: postcssConfig()
+                    },
                     'sass-loader',
                 ]
             },

@@ -1,9 +1,9 @@
 const postcssImport = require('postcss-import');
 const autoprefixer = require('autoprefixer');
 
-module.exports = ({file, options, env}) => {
+module.exports = () => {
     return {
-        parser: false,
+        ident: 'postcss',
         sourceMap: true,
         plugins: (loader) => [
             postcssImport({root: loader.resourcePath}),

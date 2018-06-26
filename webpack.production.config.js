@@ -12,6 +12,8 @@ const assetsName = '[name].[hash:8].[ext]';
 const webpackConfig = require('./webpack.config');
 const manifest = require('./manifest.json');
 
+const postcssConfig = require('./postcss.config');
+
 module.exports = {
     mode: 'production',
     entry: webpackConfig.entry,
@@ -43,7 +45,10 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
-                    'postcss-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: postcssConfig()
+                    },
                 ]
             },
             {
@@ -51,7 +56,10 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
-                    'postcss-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: postcssConfig()
+                    },
                     'sass-loader',
                 ]
             },
@@ -103,7 +111,7 @@ module.exports = {
             chunkFilename: '[id].css'
         }),
         new OptimizeCSSAssetsPlugin({
-            cssProcessorOptions: {discardComments: {removeAll: true}}
+            cssProcessorOptions: { discardComments: { removeAll: true } }
         }),
         // 移除无用的CSS, 影响打包速度
         new PurifyCSSPlugin({
