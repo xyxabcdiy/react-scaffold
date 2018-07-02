@@ -1,12 +1,9 @@
 const path = require('path');
-const glob = require('glob-all');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const PurifyCSSPlugin = require('purifycss-webpack');
 
-const SRC_PATH = path.resolve(__dirname, 'src');
 const BUILD_PATH = path.resolve(__dirname, 'output');
 const assetsName = '[name].[hash:8].[ext]';
 const webpackConfig = require('./webpack.config');
@@ -93,7 +90,6 @@ module.exports = {
     resolve: webpackConfig.resolve,
     plugins: [
         new HtmlWebpackPlugin({
-            title: '凯叔讲故事',
             template: path.resolve(BUILD_PATH, 'index.html'),
             filename: 'index.html',
             inject: 'body'
@@ -112,13 +108,6 @@ module.exports = {
         }),
         new OptimizeCSSAssetsPlugin({
             cssProcessorOptions: { discardComments: { removeAll: true } }
-        }),
-        // 移除无用的CSS, 影响打包速度
-        new PurifyCSSPlugin({
-            paths: glob.sync([
-                path.join(SRC_PATH, 'index.html'),
-                path.join(SRC_PATH, '**/*.js'),
-            ])
         })
     ]
 };

@@ -109,24 +109,6 @@ module.exports = {
         contentBase: './output',
         disableHostCheck: true,
         historyApiFallback: true,
-        port: 7777,
-        proxy: {
-            '/tapi/**': {
-                target: 'http://weixin.kaishustory.com/tapi',
-                secure: false,
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/tapi': ''
-                }
-            },
-            '/sapi/**': {
-                target: 'http://weixin.kaishustory.com',
-                secure: false,
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/sapi': ''
-                }
-            }
-        }
+        port: 7777
     }
 };
